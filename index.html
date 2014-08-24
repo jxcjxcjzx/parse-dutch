@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>parse-dutch</title>
+        <link rel="stylesheet" href="./index.css" />
+    </head>
+    <body class="parse-dutch">
+        <header class="parse-dutch-heading">
+            <h1 class="parse-dutch-heading__header">parse-dutch
+                <a href="https://travis-ci.org/wooorm/parse-dutch">
+                    <img alt="Build Status" src="https://travis-ci.org/wooorm/parse-dutch.svg?branch=master">
+                </a><a href="https://coveralls.io/r/wooorm/parse-dutch?branch=master">
+                    <img alt="Coverage" src="https://img.shields.io/coveralls/wooorm/parse-dutch.svg">
+                </a><a href="http://opensource.org/licenses/MIT">
+                    <img alt="License"  src="http://img.shields.io/npm/l/parse-dutch.svg" style="max-width:100%;">
+                </a><a href="https://www.npmjs.org/package/parse-dutch">
+                    <img alt="Version"  src="http://img.shields.io/npm/v/parse-dutch.svg" style="max-width:100%;">
+                </a>
+            </h1>
+        </header>
+        <div class="parse-dutch-editor">
+            <textarea class="parse-dutch-editor__input" autofocus>The easiest way to see how parse-dutch tokenises and parses, is by using this online demo.
+
+Hier kan je tekst toevoegen, verwijderen, en veranderen. Rechts verschijnt vervolgens de corresponderende syntax-boom.
+
+Probeer ’t, het is best tof :)</textarea>
+        </div>
+        <pre class="parse-dutch-output"><code class="parse-dutch-output__tree"></code></pre>
+        <script src="build/build.js"></script>
+    </body>
+</html>

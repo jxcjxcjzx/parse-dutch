@@ -1,0 +1,155 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+}
+
+.parse-dutch-heading {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height: 5rem;
+    left: 0;
+    right: 0;
+}
+
+.parse-dutch-heading__header {
+    font-size: 2rem;
+    margin: 1.25rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.parse-dutch-heading__header a {
+    text-decoration: none;
+}
+
+.parse-dutch-editor, .parse-dutch-output {
+    width: 50%;
+    position: absolute;
+    top: 5rem;
+    bottom: 0;
+}
+
+.parse-dutch-output {
+    font-size: 0.75rem;
+    margin: 0;
+    display: block;
+    right: 0;
+}
+
+.parse-dutch-editor__input {
+    border-width: 0;
+    padding: 1em;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    outline-width: 0;
+
+    background-color: #EAE3CB;
+
+    font-family: Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif;
+    font-size: 1.1rem;
+
+    /* The X heigth of Garamond is 39.9%, add that under the line. */
+    line-height: 1.399;
+    left: 0;
+}
+
+.parse-dutch-output__tree {
+    width: 100%;
+    margin: 0;
+    display: block;
+    overflow-y: scroll;
+    /*height: 100vh;*/
+    height: 100%;
+
+    font-family: 'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;
+    font-size: 0.75rem;
+    /* The X heigth of Garamond is 42.2%, add that under the line. */
+    line-height: 1.422;
+
+    border-width: 0;
+}
+
+.parse-dutch-output__tree {
+    background-color: #042029;
+    color: #819090;
+}
+
+.token {
+    background-color: inherit;
+}
+
+.token--root {
+    padding-left: 0;
+    background-color: transparent;
+}
+
+.token--object, .token--array {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style-type: none;
+    display: inline;
+}
+
+.token--object::before {
+    content: "{";
+}
+
+.token--object::after {
+    content: "}";
+}
+
+.token--array::before {
+    content: "[";
+}
+
+.token--array::after {
+    content: "]";
+}
+
+.token--string {
+    color: #2AA198;
+}
+
+.token--string::before, .token--string::after {
+    content: '"';
+}
+
+.token--number {
+    color: #D33682;
+}
+
+.token--boolean, .token--null {
+    color: #B58900;
+}
+
+.token--value, .token--name-value {
+    display: block;
+    padding-left: 2em;
+}
+
+.token--name-value::after, .token--value::after {
+    content: ",";
+}
+
+.token--name-value::after, .token--value:last-child::after {
+    content: "";
+}
+
+.token--value:only-child {
+    display: inline;
+    padding-left: 0;
+}
+
+.token--escape {
+    color: #CB4B16;
+}
+
+.token--selected {
+    background-color: #EAE3CB;
+}
