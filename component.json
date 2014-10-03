@@ -4,7 +4,7 @@
   "private": true,
   "repository": "wooorm/parse-dutch-gh-pages",
   "dependencies": {
-    "wooorm/parse-dutch": "^0.1.1"
+    "wooorm/parse-dutch": "^0.2.0-rc.1"
   },
   "scripts": [
     "index.js"
