@@ -95,14 +95,14 @@ module.exports = nlcstToString;
 
 });
 
-require.register("wooorm~parse-latin@0.3.0-rc.1", function (exports, module) {
+require.register("wooorm~parse-latin@0.3.0", function (exports, module) {
 'use strict';
 
-module.exports = require('wooorm~parse-latin@0.3.0-rc.1/lib/parse-latin.js');
+module.exports = require('wooorm~parse-latin@0.3.0/lib/parse-latin.js');
 
 });
 
-require.register("wooorm~parse-latin@0.3.0-rc.1/lib/parse-latin.js", function (exports, module) {
+require.register("wooorm~parse-latin@0.3.0/lib/parse-latin.js", function (exports, module) {
 /**!
  * parse-latin
  *
@@ -120,7 +120,7 @@ var nlcstToString,
     expressions;
 
 nlcstToString = require('wooorm~nlcst-to-string@0.1.1');
-expressions = require('wooorm~parse-latin@0.3.0-rc.1/lib/expressions.js');
+expressions = require('wooorm~parse-latin@0.3.0/lib/expressions.js');
 
 /**
  * Expressions.
@@ -288,8 +288,8 @@ function tokenizerFactory(context, options) {
             lastIndex, children, iterator, length, root, start, stem, tokens;
 
         root = {
-            'type' : options.type,
-            'children' : []
+            'type': options.type,
+            'children': []
         };
 
         children = root.children;
@@ -311,8 +311,8 @@ function tokenizerFactory(context, options) {
             }
 
             children.push({
-                'type' : stem.type,
-                'children' : tokens.slice(start, iterator + 1)
+                'type': stem.type,
+                'children': tokens.slice(start, iterator + 1)
             });
 
             start = iterator + 1;
@@ -924,8 +924,8 @@ function breakImplicitSentences(child, index, parent) {
         child.children = children.slice(0, iterator);
 
         parent.children.splice(index + 1, 0, node, {
-            'type' : 'SentenceNode',
-            'children' : children.slice(iterator + 1)
+            'type': 'SentenceNode',
+            'children': children.slice(iterator + 1)
         });
 
         return index + 2;
@@ -1091,8 +1091,8 @@ function removeEmptyNodes(child, index, parent) {
 function createNodeFactory(type) {
     return function (value) {
         return {
-            'type' : type,
-            'children' : [
+            'type': type,
+            'children': [
                 this.tokenizeText(value)
             ]
         };
@@ -1113,8 +1113,8 @@ function createTextNodeFactory(type) {
         }
 
         return {
-            'type' : type,
-            'value' : String(value)
+            'type': type,
+            'value': String(value)
         };
     };
 }
@@ -1337,8 +1337,8 @@ parseLatinPrototype.tokenizePunctuation =
 
 parseLatinPrototype.tokenizeSentence = function (value) {
     var root = {
-        'type' : 'SentenceNode',
-        'children' : this.tokenize(value)
+        'type': 'SentenceNode',
+        'children': this.tokenize(value)
     };
 
     modify(this.tokenizeSentenceModifiers, root);
@@ -1366,11 +1366,11 @@ parseLatinPrototype.tokenizeSentenceModifiers = [
  */
 
 parseLatinPrototype.tokenizeParagraph = tokenizerFactory(ParseLatin, {
-    'name' : 'tokenizeParagraph',
-    'tokenizer' : 'tokenizeSentence',
-    'type' : 'ParagraphNode',
-    'delimiter' : EXPRESSION_TERMINAL_MARKER,
-    'modifiers' : [
+    'name': 'tokenizeParagraph',
+    'tokenizer': 'tokenizeSentence',
+    'type': 'ParagraphNode',
+    'delimiter': EXPRESSION_TERMINAL_MARKER,
+    'modifiers': [
         mergeNonWordSentences,
         mergeAffixSymbol,
         mergeInitialLowerCaseLetterSentences,
@@ -1392,11 +1392,11 @@ parseLatinPrototype.tokenizeParagraph = tokenizerFactory(ParseLatin, {
  */
 
 parseLatinPrototype.tokenizeRoot = tokenizerFactory(ParseLatin, {
-    'name' : 'tokenizeRoot',
-    'tokenizer' : 'tokenizeParagraph',
-    'type' : 'RootNode',
-    'delimiter' : EXPRESSION_NEW_LINE,
-    'modifiers' : [
+    'name': 'tokenizeRoot',
+    'tokenizer': 'tokenizeParagraph',
+    'type': 'RootNode',
+    'delimiter': EXPRESSION_NEW_LINE,
+    'modifiers': [
         makeInitialWhiteSpaceSiblings,
         makeFinalWhiteSpaceSiblings,
         removeEmptyNodes
@@ -1422,7 +1422,7 @@ module.exports = ParseLatin;
 
 });
 
-require.register("wooorm~parse-latin@0.3.0-rc.1/lib/expressions.js", function (exports, module) {
+require.register("wooorm~parse-latin@0.3.0/lib/expressions.js", function (exports, module) {
 module.exports = {
     'affixSymbol' : /^([\)\]\}\u0F3B\u0F3D\u169C\u2046\u207E\u208E\u2309\u230B\u232A\u2769\u276B\u276D\u276F\u2771\u2773\u2775\u27C6\u27E7\u27E9\u27EB\u27ED\u27EF\u2984\u2986\u2988\u298A\u298C\u298E\u2990\u2992\u2994\u2996\u2998\u29D9\u29DB\u29FD\u2E23\u2E25\u2E27\u2E29\u3009\u300B\u300D\u300F\u3011\u3015\u3017\u3019\u301B\u301E\u301F\uFD3E\uFE18\uFE36\uFE38\uFE3A\uFE3C\uFE3E\uFE40\uFE42\uFE44\uFE48\uFE5A\uFE5C\uFE5E\uFF09\uFF3D\uFF5D\uFF60\uFF63]|["'\xBB\u2019\u201D\u203A\u2E03\u2E05\u2E0A\u2E0D\u2E1D\u2E21]|[!\.\?\u2026\u203D])\1*$/,
     'newLine' : /^(\r?\n|\r)+$/,
@@ -1441,7 +1441,7 @@ module.exports = {
 
 });
 
-require.register("wooorm~parse-dutch@0.3.0-rc.1", function (exports, module) {
+require.register("wooorm~parse-dutch@0.3.0", function (exports, module) {
 'use strict';
 
 /**
@@ -1451,7 +1451,7 @@ require.register("wooorm~parse-dutch@0.3.0-rc.1", function (exports, module) {
 var Parser,
     nlcstToString;
 
-Parser = require('wooorm~parse-latin@0.3.0-rc.1');
+Parser = require('wooorm~parse-latin@0.3.0');
 nlcstToString = require('wooorm~nlcst-to-string@0.1.1');
 
 /**
@@ -1820,7 +1820,7 @@ module.exports = ParseDutch;
 require.register("parse-dutch-gh-pages", function (exports, module) {
 'use strict';
 
-var ParseDutch = require('wooorm~parse-dutch@0.3.0-rc.1');
+var ParseDutch = require('wooorm~parse-dutch@0.3.0');
 
 var parseDutch = new ParseDutch();
 
