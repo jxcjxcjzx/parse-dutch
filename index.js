@@ -1,20 +1,48 @@
 'use strict';
 
-var ParseDutch = require('parse-dutch');
+/**
+ * Dependencies.
+ */
+
+var ParseDutch = require('wooorm/parse-dutch@0.4.0');
+
+/**
+ * `parse-dutch`.
+ */
 
 var parseDutch = new ParseDutch();
 
-var inputElement = document.querySelector('.parse-dutch-editor__input'),
-    outputTreeElement = document.querySelector('.parse-dutch-output__tree');
+/**
+ * DOM elements.
+ */
 
-var currentTree, currentTextNodes;
+var $input = document.querySelector('.parse-dutch-editor__input');
+var $output = document.querySelector('.parse-dutch-output__tree');
 
 /**
- * Expose both ParseDutch and parseDutch to the global object for quick
- * hacking.
+ * Current rendered input and selection.
  */
-window.ParseDutch = ParseDutch;
-window.parseDutch = parseDutch;
+
+var currentTree;
+var currentTextNodes;
+
+/**
+ * Tools for invisible characters.
+ */
+
+var EXPRESSION_ESCAPE = /(["\\\/\b\f\n\r\t])|([\s\S]+)/g;
+
+var ESCAPE_MAP = {
+    '\b' : '\\b',
+    '\f' : '\\f',
+    '\n' : '\\n',
+    '\r' : '\\r',
+    '\t' : '\\t'
+};
+
+/**
+ * Utility to scrol to an element.
+ */
 
 function scrollToElementNode(elementNode) {
     var totalOffset = 0,
@@ -34,7 +62,7 @@ function scrollToElementNode(elementNode) {
 
             return;
         }
-
+        
         ancestorNode = ancestorNode.parentNode;
     }
 
@@ -45,11 +73,15 @@ function scrollToElementNode(elementNode) {
     window.scrollTo(0, totalOffset);
 }
 
+/**
+ * Event handler for caret changes.
+ */
+
 function oncaretchange(newPosition) {
     var iterator = -1,
         startOfNode = 0,
         currentSelectedNode, textNodeLength, textNode;
-
+    
     while (textNode = currentTextNodes[++iterator]) {
         textNodeLength = textNode.textContent.length;
 
@@ -76,6 +108,10 @@ function oncaretchange(newPosition) {
         startOfNode += textNodeLength;
     }
 }
+
+/**
+ * Highlight syntax.
+ */
 
 function highlightJSONNameValuePair(name, json) {
     var elementNode = document.createElement('li'),
@@ -133,17 +169,6 @@ function highlightJSONArray(json) {
 
     return elementNode;
 }
-
-
-var EXPRESSION_ESCAPE = /(["\\\/\b\f\n\r\t])|([\s\S]+)/g;
-
-var ESCAPE_MAP = {
-    '\b' : '\\b',
-    '\f' : '\\f',
-    '\n' : '\\n',
-    '\r' : '\\r',
-    '\t' : '\\t'
-};
 
 function highlightJSONString(json) {
     var elementNode = document.createElement('span');
@@ -229,16 +254,20 @@ function highlightJSON(json) {
     return highlightJSONString(json);
 }
 
+/**
+ * Watch the caret.
+ */
+
 var caretStartPosition = 0,
     caretEndPosition = 0;
 
 function onpossiblecaretchange() {
-    var currentStartPosition = inputElement.selectionStart,
-        currentEndPosition = inputElement.selectionEnd;
+    var currentStartPosition = $input.selectionStart,
+        currentEndPosition = $input.selectionEnd;
 
     if (currentStartPosition > currentEndPosition) {
         currentStartPosition = currentEndPosition;
-        currentEndPosition = inputElement.selectionStart;
+        currentEndPosition = $input.selectionStart;
     }
 
     if (currentStartPosition !== caretStartPosition) {
@@ -254,16 +283,16 @@ function onpossiblecaretchange() {
 /**
  * Set up the output tree element.
  */
-function onuserinput() {
-    var value = inputElement.value,
-        highlightedSourceCode;
 
-    while (outputTreeElement.firstChild) {
-        outputTreeElement.removeChild(outputTreeElement.firstChild);
+function onuserinput() {
+    var highlightedSourceCode;
+
+    while ($output.firstChild) {
+        $output.removeChild($output.firstChild);
     }
 
     highlightedSourceCode = highlightJSON(
-        parseDutch.tokenizeRoot(value)
+        parseDutch.tokenizeRoot($input.value)
     );
 
     highlightedSourceCode.className += ' token--root';
@@ -271,19 +300,25 @@ function onuserinput() {
     currentTree = highlightedSourceCode;
     currentTextNodes = highlightedSourceCode.querySelectorAll('[data-token-value-name="value"]');
 
-    outputTreeElement.appendChild(highlightedSourceCode);
+    $output.appendChild(highlightedSourceCode);
 }
 
 /**
- * Set up the input element.
+ * Attach event handlers.
  */
-inputElement.addEventListener('input', onuserinput);
-inputElement.addEventListener('keyup', onpossiblecaretchange);
-inputElement.addEventListener('keydown', onpossiblecaretchange);
-inputElement.addEventListener('keypress', onpossiblecaretchange);
-inputElement.addEventListener('click', onpossiblecaretchange);
-inputElement.addEventListener('focus', onpossiblecaretchange);
 
-/* initial run */
+$input.addEventListener('input', onuserinput);
+
+$input.addEventListener('keyup', onpossiblecaretchange);
+$input.addEventListener('keydown', onpossiblecaretchange);
+$input.addEventListener('keypress', onpossiblecaretchange);
+$input.addEventListener('click', onpossiblecaretchange);
+$input.addEventListener('focus', onpossiblecaretchange);
+
+/**
+ * Attach event handlers.
+ */
+
 onuserinput();
+
 onpossiblecaretchange();
