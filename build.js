@@ -89,7 +89,7 @@
  * Dependencies.
  */
 
-var ParseDutch = require('wooorm/parse-dutch@0.4.0');
+var ParseDutch = require('wooorm/parse-dutch@0.4.1');
 
 /**
  * `parse-dutch`.
@@ -408,7 +408,7 @@ onuserinput();
 
 onpossiblecaretchange();
 
-}, {"wooorm/parse-dutch@0.4.0":2}],
+}, {"wooorm/parse-dutch@0.4.1":2}],
 2: [function(require, module, exports) {
 'use strict';
 
@@ -2802,11 +2802,11 @@ module.exports = modifier(makeFinalWhiteSpaceSiblings);
  */
 
 var nlcstToString,
-    plugin,
+    modifier,
     expressions;
 
 nlcstToString = require('nlcst-to-string');
-plugin = require('../plugin');
+modifier = require('../modifier');
 expressions = require('../expressions');
 
 /**
@@ -2861,6 +2861,8 @@ function breakImplicitSentences(child, index, parent) {
             'type': 'SentenceNode',
             'children': children.slice(position + 1)
         });
+
+        return index + 1;
     }
 }
 
@@ -2868,9 +2870,9 @@ function breakImplicitSentences(child, index, parent) {
  * Expose `breakImplicitSentences` as a plugin.
  */
 
-module.exports = plugin(breakImplicitSentences);
+module.exports = modifier(breakImplicitSentences);
 
-}, {"nlcst-to-string":4,"../plugin":8,"../expressions":7}],
+}, {"nlcst-to-string":4,"../modifier":9,"../expressions":7}],
 23: [function(require, module, exports) {
 'use strict';
 

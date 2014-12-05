@@ -4,7 +4,7 @@
  * Dependencies.
  */
 
-var ParseDutch = require('wooorm/parse-dutch@0.4.0');
+var ParseDutch = require('wooorm/parse-dutch@0.4.1');
 
 /**
  * `parse-dutch`.
